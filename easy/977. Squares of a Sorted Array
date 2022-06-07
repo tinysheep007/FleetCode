@@ -1,0 +1,85 @@
+###977. Squares of a Sorted Array
+
+my mistakes
+
+- I did not split the the given nums array into 2 portions
+
+what we can do
+
+- split the array into 2 portions by finding the index of the first non negative numbers and last negative number
+- Since the negative squares could be higher than positive numbers squares, we can began comparing the numbers on both side like merging linked list
+- We can loop backward for non negative numbers and loop frontward for the negative numbers
+
+```jsx
+class Solution {
+    public int[] sortedSquares(int[] nums) {
+        int len = nums.length;
+        int[] ans = new int[len];
+        int index = 0;
+        
+        //first find the least non negative numbers in the array and cut it into 2 pieces
+        int posCount = 0;
+        while(posCount < len && nums[posCount]<0){
+            posCount++;
+        }
+        
+        //we can find the index of the last appearing negative number and loop backward
+        int lastNegative = posCount - 1;
+        
+        //if there's only 1 element in the array
+        if(len == 1){
+            int temp = nums[0]*nums[0];
+            int[] edge = new int[1];
+            edge[0] = temp;
+            return edge;
+        }
+        
+        while(posCount < len && lastNegative >= 0){
+            
+            //if the number from positive side toward the back is smaller
+            //save the squared numbers and move cursor
+            if(nums[posCount] * nums[posCount] < nums[lastNegative] * nums[lastNegative]){
+                ans[index] = nums[posCount] * nums[posCount];
+                posCount ++;
+                index ++;
+            }
+            else if(nums[posCount] * nums[posCount] > nums[lastNegative] * nums[lastNegative]){
+                ans[index] = nums[lastNegative] * nums[lastNegative];
+                lastNegative --;
+                index ++;
+            }else {
+                //they are the same, then save both of them
+                ans[index] = nums[posCount] * nums[posCount];
+                posCount ++;
+                index ++;
+                
+                ans[index] = nums[lastNegative] * nums[lastNegative];
+                lastNegative --;
+                index ++;
+                
+            }
+            
+        }
+        
+        //right side runs out add everything on the left
+        if(posCount >= len){
+            while(lastNegative >= 0){
+                ans[index] = nums[lastNegative] * nums[lastNegative];
+                lastNegative --;
+                index ++;
+            }
+        }
+        
+        //left side runs out add everything on the right 
+        if(lastNegative < 0){
+            while(posCount < len){
+                ans[index] = nums[posCount] * nums[posCount];
+                posCount ++;
+                index ++;
+            }
+        }
+        return ans;
+        
+    }
+}
+```
