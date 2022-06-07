@@ -1,0 +1,79 @@
+###844. Backspace String Compare
+
+My mistake
+
+- I stored the resulting string when I don’t need to
+
+What I should do
+
+- Looping the letter backward
+- loop until we used all the hashes and compare current index with 2 string
+- check if the current char after hash it’s the same and if any string runs out
+
+class Solution {
+    public boolean backspaceCompare(String s, String t) {
+        //start looping backward from the end of the letter 
+        //keep track of the count of #
+        //when u see a letter just ignore if there's count of #
+        //or else add it to the string
+        
+        //find length
+        int len1 = s.length();
+        int len2 = t.length();
+        //save the string so we can compare at the end
+        String s1 = "";
+        String s2 = "";
+        //hash count
+        int hash1 = 0;
+        int hash2 = 0;
+        //keep track of traversing index
+        int index1 = len1 - 1;
+        int index2 = len2 - 1;
+        
+        
+        while(index1 >= 0 || index2 >= 0){
+            
+            //loop the string until we used all the hash backward
+            while(index1 >= 0){
+                if(s.charAt(index1) == '#'){
+                    hash1 ++;
+                    index1 --;
+                }else if(hash1 > 0){
+                    hash1 --;
+                    index1 --;
+                }else{
+                    break;
+                }
+            }
+            
+            while(index2 >= 0 ){
+                if(t.charAt(index2) == '#'){
+                    hash2 ++;
+                    index2 --;
+                }else if(hash2 > 0){
+                    hash2 --;
+                    index2 --;
+                }else {
+                    break;
+                }
+            }
+            
+            //if the left over char is not the same , then its false
+            if(index1 >= 0 && index2 >= 0 && s.charAt(index1) != t.charAt(index2)){
+                return false;
+            }
+            
+            //check if any string hit null or runs out
+            if( ( (index1 >=0) != (index2>=0) ) ){
+                return false;
+            }
+            index1 --;
+            index2 --;
+        }
+        
+        return true;
+
+        
+        
+    }
+}
