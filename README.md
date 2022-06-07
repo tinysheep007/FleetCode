@@ -1,1 +1,3 @@
 # FleetCode
+
+leetcode notes
