@@ -1,0 +1,28 @@
+70. Climbing Stairs
+
+what you should do
+
+- first draw a decision tree or any tree resembling the problem
+- find the patterns
+- you will realize the number of ways at n = ways(n-1) + ways(n-2) because you can only reach n from those spots
+- We don’t have to use a array to hold the Fibonacci sequence, we can simply use 3 variables and swap them multiple times
+- watch out for base cases, we can start at 0 steps which has only 1 way to be there
+
+class Solution {
+    public int climbStairs(int n) {
+        int one = 1;
+        int two = 1;
+        int temp = 1;
+        int check = 1;
+        
+        //We loop n-1 times because our one and two techinically started at step 0 and step 1
+        while(check <= n-1){
+            temp = one;
+            one = one + two;
+            two = temp;
+            check++;
+        }
+
+        return one;
+    }
+}
