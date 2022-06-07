@@ -1,0 +1,35 @@
+#1. two sum
+
+My mistake 
+
+- Used two for loop so that time complexity it’s O(n^2) since we have to use two pointers and loop through the second layer per first number
+
+How to improve
+
+- Used hashMap to store all the values that we pass by
+- We can access the previously saved numbers in O(1)
+- When we check for matching numbers, we can have O(1) because we can check if a key is present in the hashmap quickly
+- we put (actual number, index) into the map
+- We only have to loop through the array once . However, the space complexity will increase.
+
+
+```
+
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> test = new HashMap<Integer, Integer>();
+        for(int i = 0 ; i<nums.length ; i++){
+            int missing = target - nums[i];
+            
+            if(test.containsKey(missing)){
+                return new int[] {i, test.get(missing)};
+            }
+            
+            test.put(nums[i],i);
+            
+        }
+        
+        return new int[] {};
+    }
+}
+```
